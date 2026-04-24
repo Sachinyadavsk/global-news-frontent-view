@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: "https://global-news-mrsn.vercel.app/api", // change if needed
+    baseURL: "https://global-news-api.onrender.com/api", // change if needed
     //  baseURL: "http://localhost:5000/api", // change if needed
 });
 

@@ -39,7 +39,7 @@ const Navbar = () => {
 
                     {/* Logo */}
                     <Link to="/" className="text-2xl font-bold text-blue-600">
-                        EnjoyVS
+                        Global News
                     </Link>
 
                     {/* Desktop Menu */}
@@ -54,7 +54,7 @@ const Navbar = () => {
                             </Link>
                         ))}
                         <Link to="/all-category">All Category</Link>
-                        <Link to="/notifications">Notifications</Link>
+                        <Link to="/notifications">Contact</Link>
                     </div>
 
                     {/* Search */}
@@ -112,7 +112,7 @@ const Navbar = () => {
                             </Link>
                         ))}
                         <Link to="/all-category">All Category</Link>
-                        <Link to="/notifications">Notifications</Link>
+                        <Link to="/notifications">Contact</Link>
 
                         {!user ? (
                             <Link to="/login">Login</Link>

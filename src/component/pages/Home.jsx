@@ -137,7 +137,7 @@ const Home = () => {
             <div className="flex">
               <div className="py-1"><svg className="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" /></svg></div>
               <div>
-                <p className="font-bold">Video Hot section in display with latest</p>
+                <p className="font-bold">Video global news section in display with latest</p>
               </div>
             </div>
           </div>
@@ -145,9 +145,9 @@ const Home = () => {
 
         {/* video play section */}
         <div className="max-w-6xl mx-auto mt-10">
-          <h2 className="text-2xl font-bold text-gray-800 mb-5">Section Videos</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-5">Global New Live </h2>
           <div className="border rounded-lg shadow hover:shadow-lg transition duration-300 p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">  
               <div className="">
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                   {postsgallery.flatMap((gall, index) =>
@@ -199,8 +199,8 @@ const Home = () => {
         </div>
 
         <div>
-          <h2 className="text-2xl font-bold text-gray-800 p-6">
-            Category List
+          <h2 className="text-xl font-bold text-gray-800 p-6 ml-5">
+           Global News Category List
           </h2>
 
           <div className="w-full p-5">
@@ -271,7 +271,7 @@ const Home = () => {
           </div>
         </div>
         <div className="max-w-6xl mx-auto mt-10">
-          <h2 className="text-2xl font-bold text-gray-800 p-6">Featured Videos</h2>
+          <h2 className="text-2xl font-bold text-gray-800 p-6">News Collections</h2>
           <div className="border rounded-lg shadow hover:shadow-lg transition duration-300 p-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
               {posts.length === 0 ? (
