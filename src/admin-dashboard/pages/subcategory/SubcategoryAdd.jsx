@@ -24,8 +24,6 @@ const SubcategoryAdd = () => {
     category_id: "",
     name: "",
     slug: "",
-    photo: "",
-    banner: "",
     show_on_menu: false,
   });
 
@@ -51,11 +49,6 @@ const SubcategoryAdd = () => {
         ...form,
         name: value,
         slug: generateSlug(value),
-      });
-    } else if (type === "file") {
-      setForm({
-        ...form,
-        [name]: files[0], //  store file object
       });
     } else {
       setForm({
@@ -85,10 +78,6 @@ const SubcategoryAdd = () => {
       formData.append("slug", form.slug);
       formData.append("show_on_menu", form.show_on_menu);
 
-      //  FILES
-      if (form.photo) formData.append("photo", form.photo);
-      if (form.banner) formData.append("banner", form.banner);
-
       const res = await API.post("/subcategories", formData); // ❗ no headers
 
       if (res.data.success) {
@@ -100,7 +89,7 @@ const SubcategoryAdd = () => {
 
     } catch (err) {
       console.log(err.response?.data);
-      setError("Upload failed");
+      setError("Sub category failed");
     } finally {
       setLoading(false);
     }
@@ -157,20 +146,6 @@ const SubcategoryAdd = () => {
             name="slug"
             placeholder="Slug"
             value={form.slug}
-            onChange={handleChange}
-            className="border p-2 mb-3 rounded w-full"
-          />
-
-          <input
-            type="file"
-            name="photo"
-            onChange={handleChange}
-            className="p-2 mb-3 h-10 border rounded w-full"
-          />
-
-          <input
-            type="file"
-            name="banner"
             onChange={handleChange}
             className="border p-2 mb-3 rounded w-full"
           />

@@ -44,8 +44,6 @@ const SubcategoryEdit = () => {
     category_id: "",
     name: "",
     slug: "",
-    photo: "",
-    banner: "",
     show_on_menu: false,
   });
 
@@ -72,12 +70,7 @@ const SubcategoryEdit = () => {
         name: value,
         slug: generateSlug(value),
       });
-    } else if (type === "file") {
-      setForm({
-        ...form,
-        [name]: files[0], //  store file object
-      });
-    } else {
+    }else {
       setForm({
         ...form,
         [name]: type === "checkbox" ? checked : value,
@@ -96,21 +89,13 @@ const SubcategoryEdit = () => {
     formData.append("slug", form.slug);
     formData.append("show_on_menu", form.show_on_menu);
 
-    if (form.photo instanceof File) {
-      formData.append("photo", form.photo);
-    }
-
-    if (form.banner instanceof File) {
-      formData.append("banner", form.banner);
-    }
-
     try {
       await API.put(`/subcategories/${id}`, formData);
       alert("Subcategory updated successfully");
 
       navigate("/admin/subcategory/list");
     } catch (err) {
-      console.error("Update failed", err);
+      console.error("Sub category Update failed", err);
     }
   };
 
@@ -169,19 +154,6 @@ const SubcategoryEdit = () => {
             className="border p-2 mb-3 rounded w-full"
           />
 
-          {/* CURRENT PHOTO */}
-          {form.photo && typeof form.photo === "string" && (
-            <img src={form.photo} className="w-10 h-10 mb-2 rounded" />
-          )}
-
-          <input type="file" name="photo" onChange={handleChange} />
-
-          {/* CURRENT BANNER */}
-          {form.banner && typeof form.banner === "string" && (
-            <img src={form.banner} className="w-10 h-10 mb-2 rounded" />
-          )}
-
-          <input type="file" name="banner" onChange={handleChange} />
           {/* Checkboxes */}
 
           <div className="flex items-center gap-2 mb-3">
