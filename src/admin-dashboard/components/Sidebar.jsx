@@ -25,14 +25,6 @@ const Sidebar = ({ open, setOpen }) => {
         },
 
         {
-            name: "Gallery",
-            children: [
-                { name: "Gallery List", path: "/admin/gallery" },
-                { name: "Add Gallery", path: "/admin/gallery/add" },
-            ],
-        },
-
-        {
             name: "Slider",
             children: [
                 { name: "Slider List", path: "/admin/slider" },
@@ -40,14 +32,6 @@ const Sidebar = ({ open, setOpen }) => {
             ],
         },
         
-        {
-            name: "Ads",
-            children: [
-                { name: "Ads List", path: "/admin/ads" },
-                { name: "Add Ad", path: "/admin/ads/add" },
-            ],
-        },
-
         {
             name: "Posts",
             children: [

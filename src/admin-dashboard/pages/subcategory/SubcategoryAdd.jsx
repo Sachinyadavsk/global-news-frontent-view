@@ -42,8 +42,9 @@ const SubcategoryAdd = () => {
   };
 
   const handleChange = (e) => {
-    const { name, value, type, checked, files } = e.target;
+    const { name, value, type, checked } = e.target;
 
+    // auto update slug when name changes
     if (name === "name") {
       setForm({
         ...form,
@@ -58,42 +59,36 @@ const SubcategoryAdd = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-
-    if (!form.name || !form.slug || !form.category_id) {
-      return setError("All fields are required");
-    }
-
-    try {
-      setLoading(true);
-
-      const formData = new FormData();
-
-      formData.append("uid", form.uid);
-      formData.append("category_id", form.category_id);
-      formData.append("name", form.name);
-      formData.append("slug", form.slug);
-      formData.append("show_on_menu", form.show_on_menu);
-
-      const res = await API.post("/subcategories", formData); // ❗ no headers
-
-      if (res.data.success) {
-        setSuccess(" Subcategory added successfully!");
-        setTimeout(() => navigate("/admin/subcategory/list"), 1500);
-      } else {
-        setError("❌ Failed");
-      }
-
-    } catch (err) {
-      console.log(err.response?.data);
-      setError("Sub category failed");
-    } finally {
-      setLoading(false);
-    }
-  };
+ const handleSubmit = async (e) => {
+     e.preventDefault();
+     setError("");
+     setSuccess("");
+ 
+     if (!form.name || !form.slug) {
+       return setError("All fields are required");
+     }
+ 
+     try {
+       setLoading(true);
+ 
+       const res = await API.post("/subcategories", form);
+ 
+       if (res.data && res.data.success) {
+         setSuccess("subcategories added successfully!");
+ 
+         // redirect after short delay
+         setTimeout(() => {
+           navigate("/admin/subcategory/list");
+         }, 1500);
+       } else {
+         setError("❌ Failed to add subcategories");
+       }
+     } catch (err) {
+       setError(err.message ? err.message : "subcategories failed. Try again.");
+     } finally {
+       setLoading(false);
+     }
+   };
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-md">

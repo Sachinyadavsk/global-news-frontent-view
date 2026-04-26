@@ -9,7 +9,6 @@ const Home = () => {
   const [current, setCurrent] = useState(0);
   const [categories, setCategories] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [postsgallery, setPostsGallery] = useState([]);
   const [activeTab, setActiveTab] = useState("All");
   const [loading, setLoading] = useState(true);
 
@@ -68,27 +67,6 @@ const Home = () => {
     fetchPosts();
   }, []);
 
-  // get signal post image
-
-  const post_id = posts?.length > 0 ? posts[0]._id : null;
-
-  useEffect(() => {
-    if (!post_id) return;
-
-    const fetchPostsGallery = async () => {
-      try {
-        const res = await API.get(`/gallery/images/${post_id}`);
-        setPostsGallery(res.data.data);
-        console.log("Fetched gallery:", res.data.data[0]);
-      } catch (err) {
-        console.error("Error fetching gallery", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPostsGallery();
-  }, [post_id]);
 
   //  Filter using category_id
   const filteredPosts =
@@ -132,75 +110,9 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="max-w-6xl mx-auto ">
-          <div className="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md" role="alert">
-            <div className="flex">
-              <div className="py-1"><svg className="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" /></svg></div>
-              <div>
-                <p className="font-bold">Video global news section in display with latest</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* video play section */}
-        <div className="max-w-6xl mx-auto mt-10">
-          <h2 className="text-2xl font-bold text-gray-800 mb-5">Global New Live </h2>
-          <div className="border rounded-lg shadow hover:shadow-lg transition duration-300 p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">  
-              <div className="">
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                  {postsgallery.flatMap((gall, index) =>
-                    gall.image_path?.map((img, i) => (
-                      <img
-                        key={`${index}-${i}`}
-                        src={img}
-                        alt={gall.caption}
-                        className="w-full h-40 object-cover rounded"
-                      />
-                    ))
-                  )}
-                </div>
-
-              </div>
-              <div className="">
-                {posts.length === 0 ? (
-                  <p className="col-span-full text-center text-gray-500">
-                    No posts found
-                  </p>
-                ) : (
-                  posts.slice(0, 1).map(post => (
-                    <div
-                      key={post._id}
-                      className="card bg-base-100 shadow-md hover:shadow-lg transition"
-                    >
-                      <figure>
-                        {post.video_path ? (
-                          <video
-                            src={post.video_path}
-                            poster={post.image_big}
-                            controls
-                            className="h-full w-full object-cover"
-                          />
-                        ) : (
-                          <img
-                            src={post.image_big || "https://via.placeholder.com/300"}
-                            alt={post.title}
-                            className="h-full w-full object-cover"
-                          />
-                        )}
-                      </figure>
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div>
           <h2 className="text-xl font-bold text-gray-800 p-6 ml-5">
-           Global News Category List
+            Global News Category List
           </h2>
 
           <div className="w-full p-5">
@@ -245,7 +157,7 @@ const Home = () => {
                   </p>
                 ) : (
                   filteredPosts.map(post => (
-                    <Link to={`/post/edit/${post._id}`}> 
+                    <Link to={`/post/edit/${post._id}`}>
                       <div
                         key={post._id}
                         className="card bg-base-100 shadow-md hover:shadow-lg transition"

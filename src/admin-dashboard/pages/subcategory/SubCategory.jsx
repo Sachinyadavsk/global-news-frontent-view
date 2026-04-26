@@ -67,8 +67,6 @@ const SubCategory = () => {
               <th className="p-2 text-left">Name</th>
               <th className="p-2 text-left">Slug</th>
               <th className="p-2 text-left">Category ID</th>
-              <th className="p-2 text-left">Photo</th>
-              <th className="p-2 text-left">Banner</th>
               <th className="p-2 text-left">Menu</th>
               <th className="p-2 text-left">Action</th>
             </tr>
@@ -81,16 +79,6 @@ const SubCategory = () => {
                 <td className="p-2">{item.slug}</td>
                 <td className="p-2">
                   {categories.find((cat) => cat._id === item.category_id)?.name || item.category_id}
-                </td>
-                <td className="p-2">
-                  {item.photo && (
-                    <img src={item.photo} alt="Photo" className="w-5 h-5 rounded" />
-                  )}
-                </td>
-                <td className="p-2">
-                  {item.banner && (
-                    <img src={item.banner} alt="Banner" className="w-5 h-6 rounded" />
-                  )}
                 </td>
                 <td className="p-2">
                   {item.show_on_menu ? "Yes" : "No"}

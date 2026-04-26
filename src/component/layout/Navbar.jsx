@@ -44,7 +44,7 @@ const Navbar = () => {
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center space-x-6">
-                        {menuItems.slice(0, 4).map((item, index) => (
+                        {menuItems.slice(0, 7).map((item, index) => (
                             <Link
                                 key={index}
                                 to={`/category/${item.slug}`}   //  FIXED
@@ -53,12 +53,10 @@ const Navbar = () => {
                                 {item.name}
                             </Link>
                         ))}
-                        <Link to="/all-category">All Category</Link>
-                        <Link to="/notifications">Contact</Link>
                     </div>
 
                     {/* Search */}
-                    <div className="hidden md:flex items-center border rounded-lg px-2 py-1 w-1/3">
+                    <div className="hidden md:flex items-center border rounded-lg px-2 py-1 w-1/5">
                         <Search size={18} className="text-gray-500" />
                         <input
                             type="text"
@@ -68,6 +66,8 @@ const Navbar = () => {
                     </div>
 
                     <div className="hidden md:flex items-center space-x-6">
+                        <Link to="/all-category">All Category</Link>
+                        <Link to="/notifications">Contact</Link>
                         {/* 👇 AUTH BASED */}
                         {!user ? (
                             <Link to="/login">Login</Link>
@@ -102,7 +102,7 @@ const Navbar = () => {
                 {isOpen && (
                     <div className="md:hidden flex flex-col space-y-3 pb-4">
 
-                        {menuItems.slice(0, 8).map((item, index) => (
+                        {menuItems.map((item, index) => (
                             <Link
                                 key={index}
                                 to={`/category/${item.slug}`}
@@ -111,9 +111,9 @@ const Navbar = () => {
                                 {item.name}
                             </Link>
                         ))}
+
                         <Link to="/all-category">All Category</Link>
                         <Link to="/notifications">Contact</Link>
-
                         {!user ? (
                             <Link to="/login">Login</Link>
                         ) : (
