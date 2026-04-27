@@ -4,13 +4,15 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Register from './component/pages/Register';
 import Home from './component/pages/Home';
 import Login from './component/pages/Login.jsx';
-import Notifications from './component/pages/Notifications';
+import Contact from './component/pages/Contact.jsx';
 import ClientApp from "./client-dashboard/App";
 import AdminApp from "./admin-dashboard/App";
 import ProtectedRoute from "./shared/ProtectedRoute.jsx";
 import AdminRoute from "./shared/AdminRoute.jsx";
-import AllCategories from './component/pages/AllCategories.jsx';
+import About from './component/pages/About.jsx';
 import DetailsPost from './component/pages/DetailsPost.jsx';
+import Footer from './component/pages/Footer.jsx';
+import News from './component/pages/News.jsx';
 
 const App = () => {
   const location = useLocation();
@@ -26,10 +28,11 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/all-category" element={<AllCategories />} />
-        <Route path="/notifications" element={<Notifications />} />
-        <Route path="/post/edit/:id" element={<DetailsPost />} />
-        
+        <Route path="/about" element={<About />} />
+        <Route path="/news" element={<News />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/news/:slug" element={<DetailsPost />} />
+
         {/* Client */}
         <Route
           path="/dashboard/*"
@@ -50,6 +53,7 @@ const App = () => {
           }
         />
       </Routes>
+      <Footer />
     </div>
   )
 }

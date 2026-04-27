@@ -5,26 +5,12 @@ import API from "../../shared/api/axios"
 import { Link } from 'react-router-dom';
 
 const Home = () => {
-  const [bannerItems, setBannerItems] = useState([]);
+
   const [current, setCurrent] = useState(0);
   const [categories, setCategories] = useState([]);
   const [posts, setPosts] = useState([]);
   const [activeTab, setActiveTab] = useState("All");
   const [loading, setLoading] = useState(true);
-
-  // Fetch sliders using Axios
-  useEffect(() => {
-    const fetchSliders = async () => {
-      try {
-        const res = await API.get("/sliders");
-        setBannerItems(res.data.data);
-      } catch (err) {
-        console.error("Error fetching sliders:", err);
-      }
-    };
-
-    fetchSliders();
-  }, []);
 
 
   // Auto slide every 3 seconds
@@ -119,7 +105,7 @@ const Home = () => {
                 </p>
               ) : (
                 posts.slice(0, 2).map(post => (
-                  <Link to={`/post/edit/${post._id}`}>
+                  <Link to={`/news/${post.slug}`}>
                     <div className="bg-white rounded-lg shadow-md overflow-hidden">
                       <img src={post.image_big || "https://via.placeholder.com/300"} alt="Featured Video 1" />
                       <div className="p-4">
@@ -180,7 +166,7 @@ const Home = () => {
                   </p>
                 ) : (
                   filteredPosts.slice(0, 12).map(post => (
-                    <Link to={`/post/edit/${post._id}`}>
+                    <Link to={`/news/${post.slug}`}>
                       <div
                         key={post._id}
                         className="card bg-base-100 shadow-md hover:shadow-lg transition"
@@ -216,8 +202,8 @@ const Home = () => {
                       No posts found
                     </p>
                   ) : (
-                    posts.slice(0, 3).map(post => (
-                      <Link to={`/post/edit/${post._id}`}>
+                    posts.map(post => (
+                      <Link to={`/news/${post.slug}`}>
                         <div className="bg-white rounded-lg shadow-md overflow-hidden">
                           <img src={post.image_big || "https://via.placeholder.com/300"} alt="Featured Video 1" />
                           <div className="p-4">
@@ -243,8 +229,8 @@ const Home = () => {
                       No posts found
                     </p>
                   ) : (
-                    posts.slice(0, 3).map(post => (
-                      <Link to={`/post/edit/${post._id}`}>
+                    posts.map(post => (
+                      <Link to={`/news/${post.slug}`}>
                         <div className="bg-white float-none md:flex text-center justify-between rounded-lg shadow-md overflow-hidden gap-2">
                           <div className="">
                             <img src={post.image_big || "https://via.placeholder.com/300"} alt="Featured Video 1" height={100} width={100} />
