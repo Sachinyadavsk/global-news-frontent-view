@@ -29,12 +29,12 @@ const Home = () => {
 
   // Auto slide every 3 seconds
   useEffect(() => {
-    if (bannerItems.length === 0) return; // 👈 prevent division by 0
+    if (posts.length === 0) return; // 👈 prevent division by 0
     const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % bannerItems.length);
+      setCurrent((prev) => (prev + 1) % posts.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, [bannerItems]);
+  }, [posts]);
 
 
   //  Fetch Categories
@@ -80,46 +80,71 @@ const Home = () => {
   return (
     <div className="bg-white min-h-screen">
       <div className='max-w-7xl mx-auto py-10 px-4'>
-        <div className="mb-6">
-          <div className="w-full overflow-hidden relative">
-            <div className="flex transition-transform duration-700"
-              style={{ transform: `translateX(-${current * 100}%)` }}>
-              {bannerItems.map((item, index) => (
-                <img
-                  key={index}
-                  src={item.photo}
-                  className="w-full flex-shrink-0 h-[200px] sm:h-[250px] md:h-[300px] lg:h-[400px] object-cover"
-                />
-              ))}
+        {/* slider and latest news sections */}
+        <div className="flex flex-cols-1 md:flex-cols-2 gap-2 mt-6">
+          <div className="w-[60%]">
+            <div className="w-full overflow-hidden relative">
+              <div className="flex transition-transform duration-700"
+                style={{ transform: `translateX(-${current * 100}%)` }}>
+                {posts.map((item, index) => (
+                  <img
+                    key={index}
+                    src={item.image_big}
+                    className="w-full flex-shrink-0 h-[200px] sm:h-[250px] md:h-[300px] lg:h-[400px] object-cover"
+                  />
+                ))}
+              </div>
+
+              {/* Manual buttons */}
+              <button
+                onClick={() =>
+                  setCurrent((current - 1 + posts.length) % posts.length)
+                }
+                className="btn btn-circle absolute left-5 top-1/2">
+                ❮
+              </button>
+
+              <button
+                onClick={() => setCurrent((current + 1) % posts.length)}
+                className="btn btn-circle absolute right-5 top-1/2">
+                ❯
+              </button>
             </div>
-
-            {/* Manual buttons */}
-            <button
-              onClick={() =>
-                setCurrent((current - 1 + bannerItems.length) % bannerItems.length)
-              }
-              className="btn btn-circle absolute left-5 top-1/2">
-              ❮
-            </button>
-
-            <button
-              onClick={() => setCurrent((current + 1) % bannerItems.length)}
-              className="btn btn-circle absolute right-5 top-1/2">
-              ❯
-            </button>
+          </div>
+          <div className="w-[40%]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {posts.length === 0 ? (
+                <p className="col-span-full text-center text-gray-500">
+                  No posts found
+                </p>
+              ) : (
+                posts.slice(0, 2).map(post => (
+                  <Link to={`/post/edit/${post._id}`}>
+                    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                      <img src={post.image_big || "https://via.placeholder.com/300"} alt="Featured Video 1" />
+                      <div className="p-4">
+                        <h3 className="text-lg font-bold text-gray-800">{post.title}</h3>
+                        <p className="text-gray-600">
+                          {post.description.split(' ').length > 20
+                            ? post.description.split(' ').slice(0, 20).join(' ') + '...'
+                            : post.description}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                ))
+              )}
+            </div>
           </div>
         </div>
-
+        {/* Global News Category List */}
         <div>
           <h2 className="text-xl font-bold text-gray-800 p-6 ml-5">
             Global News Category List
           </h2>
-
           <div className="w-full p-5">
-
             {/* 🔥 Tabs */}
             <div className="flex gap-3 mb-6 justify-end flex-wrap">
-
               {/*  ALL TAB */}
               <button
                 onClick={() => setActiveTab("All")}
@@ -128,7 +153,6 @@ const Home = () => {
               >
                 All
               </button>
-
               {/*  CATEGORY TABS (use _id) */}
               {categories.map(cat => (
                 <button
@@ -149,14 +173,13 @@ const Home = () => {
               </div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-
                 {/* ❌ No Data */}
                 {filteredPosts.length === 0 ? (
                   <p className="col-span-full text-center text-gray-500">
                     No posts found
                   </p>
                 ) : (
-                  filteredPosts.map(post => (
+                  filteredPosts.slice(0, 12).map(post => (
                     <Link to={`/post/edit/${post._id}`}>
                       <div
                         key={post._id}
@@ -167,7 +190,6 @@ const Home = () => {
                           alt={post.title}
                           className="h-32 w-full object-cover"
                         />
-
                         <div className="card-body p-3">
                           <h2 className="text-sm font-semibold line-clamp-2">
                             {post.title}
@@ -182,25 +204,65 @@ const Home = () => {
             )}
           </div>
         </div>
-        <div className="max-w-6xl mx-auto mt-10">
+        {/* News Collections */}
+        <div className="max-w-7xl mx-auto mt-10">
           <h2 className="text-2xl font-bold text-gray-800 p-6">News Collections</h2>
-          <div className="border rounded-lg shadow hover:shadow-lg transition duration-300 p-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
-              {posts.length === 0 ? (
-                <p className="col-span-full text-center text-gray-500">
-                  No posts found
-                </p>
-              ) : (
-                posts.slice(0, 3).map(post => (
-                  <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src={post.image_big || "https://via.placeholder.com/300"} alt="Featured Video 1" />
-                    <div className="p-4">
-                      <h3 className="text-lg font-bold text-gray-800">{post.title}</h3>
-                      <p className="text-gray-600">{post.description}</p>
-                    </div>
-                  </div>
-                ))
-              )}
+          <div className="flex flex-cols-1 md:flex-cols-2 gap-2 mt-6">
+            <div className="max-w-4xl mx-auto">
+              <div className="border rounded-lg shadow hover:shadow-lg transition duration-300 p-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                  {posts.length === 0 ? (
+                    <p className="col-span-full text-center text-gray-500">
+                      No posts found
+                    </p>
+                  ) : (
+                    posts.slice(0, 3).map(post => (
+                      <Link to={`/post/edit/${post._id}`}>
+                        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                          <img src={post.image_big || "https://via.placeholder.com/300"} alt="Featured Video 1" />
+                          <div className="p-4">
+                            <h3 className="text-lg font-bold text-gray-800">{post.title}</h3>
+                            <p className="text-gray-600">
+                              {post.description.split(' ').length > 20
+                                ? post.description.split(' ').slice(0, 20).join(' ') + '...'
+                                : post.description}
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="max-w-2xl mx-auto">
+              <div className="border rounded-lg shadow hover:shadow-lg transition duration-300 p-6">
+                <div className="max-w-full">
+                  {posts.length === 0 ? (
+                    <p className="col-span-full text-center text-gray-500">
+                      No posts found
+                    </p>
+                  ) : (
+                    posts.slice(0, 3).map(post => (
+                      <Link to={`/post/edit/${post._id}`}>
+                        <div className="bg-white float-none md:flex text-center justify-between rounded-lg shadow-md overflow-hidden gap-2">
+                          <div className="">
+                            <img src={post.image_big || "https://via.placeholder.com/300"} alt="Featured Video 1" height={100} width={100} />
+                          </div>
+                          <div className="">
+                            <h3 className="text-sm font-bold text-gray-800">{post.title}</h3>
+                            <p className="text-gray-600">
+                              {post.description.split(' ').length > 10
+                                ? post.description.split(' ').slice(0, 10).join(' ') + '...'
+                                : post.description}
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                    ))
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>

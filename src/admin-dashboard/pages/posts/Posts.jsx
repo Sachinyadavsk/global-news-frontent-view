@@ -71,7 +71,6 @@ const Posts = () => {
             <tr>
               <th className="p-2 text-left">Name</th>
               <th className="p-2 text-left">Slug</th>
-              <th className="p-2 text-left">Prices</th>
               <th className="p-2 text-left">Category Name</th>
               <th className="p-2 text-left">Subcategory Name</th>
               <th className="p-2 text-left">Photo</th>
@@ -84,7 +83,6 @@ const Posts = () => {
               <tr key={index} className="border-t">
                 <td className="p-2">{item.title}</td>
                 <td className="p-2">{item.slug}</td>
-                <td className="p-2">{item.prices}</td>
                 <td className="p-2">
                   {categories.find((cat) => cat._id === item.category_id)?.name || item.category_id}
                 </td>

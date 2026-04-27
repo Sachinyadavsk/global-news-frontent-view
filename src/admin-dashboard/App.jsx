@@ -7,14 +7,11 @@ import Posts from "./pages/posts/Posts";
 import Category from "./pages/category/Category";
 import SubCategory from "./pages/subcategory/SubCategory";
 import Pages from "./pages/Pages";
-import Slider from "./pages/slider/Slider";
 import Profile from "./pages/users/Profile";
 import PostsAdd from "./pages/posts/PostsAdd";
 import PostEdit from "./pages/posts/PostEdit";
 import CategoryList from "./pages/category/CategoryList";
 import CategoryEdit from "./pages/category/CategoryEdit";
-import SliderAdd from "./pages/slider/SliderAdd";
-import SliderEdit from "./pages/slider/SliderEdit";
 import UsersAdd from "./pages/users/UsersAdd";
 import UsersEdit from "./pages/users/UsersEdit";
 import SubcategoryAdd from "./pages/subcategory/SubcategoryAdd";
@@ -42,10 +39,6 @@ const AdminApp = () => {
         <Route path="/subcategory/list" element={<SubCategory />} />
         <Route path="/subcategory/add" element={<SubcategoryAdd />} />
         <Route path="/subcategory/edit/:id" element={<SubcategoryEdit />} />
-        {/* slider */}
-        <Route path="/slider" element={<Slider />} />
-        <Route path="/slider/add" element={<SliderAdd />} />
-        <Route path="/slider/edit/:id" element={<SliderEdit />} />
         {/* posts */}
         <Route path="/posts" element={<Posts />} />
         <Route path="/posts/add" element={<PostsAdd />} />

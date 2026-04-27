@@ -5,13 +5,10 @@ import { useNavigate, useParams } from "react-router-dom";
 const PostEdit = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
-
   const [imagePreview, setImagePreview] = useState(null);
   const [videoPreview, setVideoPreview] = useState(null);
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -23,12 +20,9 @@ const PostEdit = () => {
     slug: "",
     meta_desc: "",
     description: "",
-    prices: "",
-    discount_price: "",
     category_id: "",
     subcategories_id: "",
     image_big: null,
-    video_path: null,
     is_slider: "",
     is_popular: "",
     is_deals_under: "",
@@ -53,9 +47,6 @@ const PostEdit = () => {
         // previews (existing files)
         if (data.image_big) {
           setImagePreview(data.image_big);
-        }
-        if (data.video_path) {
-          setVideoPreview(data.video_path);
         }
 
       } catch (err) {
@@ -109,10 +100,6 @@ const PostEdit = () => {
 
       if (name === "image_big") {
         setImagePreview(URL.createObjectURL(file));
-      }
-
-      if (name === "video_path") {
-        setVideoPreview(URL.createObjectURL(file));
       }
 
     } else {
@@ -216,35 +203,6 @@ const PostEdit = () => {
                 rows={8}
                 className="border p-2 mb-3 rounded w-full"
               />
-              <div className="flex justify-between gap-6">
-                <div className="w-full">
-                  <label className="block text-md mb-2 font-bold">Prices</label>
-                  {/* prices */}
-                  <input
-                    type="number"
-                    name="prices"
-                    placeholder="prices"
-                    value={form.prices}
-                    onChange={handleChange}
-                    className="border p-2 mb-3 rounded w-full"
-                  />
-                </div>
-                <div className="w-full">
-                  {/* discount_price */}
-                  <label className="block text-md mb-2 font-bold">Discount Price</label>
-                  <input
-                    type="text"
-                    name="discount_price"
-                    placeholder="discount_price"
-                    value={form.discount_price}
-                    onChange={handleChange}
-                    className="border p-2 mb-3 rounded w-full"
-                  />
-                </div>
-
-              </div>
-
-
             </div>
             <div className="">
               <input
@@ -256,29 +214,6 @@ const PostEdit = () => {
               {imagePreview && (
                 <img src={imagePreview} className="w-10 mt-2 rounded" />
               )}
-
-              {/* video_path design card */}
-
-              <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Upload Video
-                </label>
-
-                <input
-                  type="file"
-                  name="video_path"
-                  onChange={handleChange}
-                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0
-                   file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100cursor-pointer"
-                />
-                {videoPreview && (
-                  <video src={videoPreview} controls className="w-full mt-2" />
-                )}
-
-                <p className="text-xs text-gray-400 mt-2">
-                  Supported: MP4, AVI, MOV (Max 15MB)
-                </p>
-              </div>
 
               {/* category select option list */}
 
