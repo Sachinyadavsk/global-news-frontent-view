@@ -57,7 +57,7 @@ const DetailsPost = () => {
                         <li className='text-green-800'>{postsDetails.title}</li>
                     </ul>
                 </h2>
-                <div className="flex flex-cols-1 md:flex-cols-2 gap-2 mt-6">
+                <div className="sm:flex flex-cols-1 md:flex-cols-2 gap-2 mt-6">
                     <div className="max-w-4xl mx-auto">
                         <div className="border rounded-lg shadow hover:shadow-lg transition duration-300 p-6">
                             <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mt-6">

@@ -25,14 +25,14 @@ const Navbar = () => {
         fetchMenuCate();
     }, []);
 
-    // Fetch subcategories
+    // Fetch getallsubcategories
     useEffect(() => {
         const fetchSubCategory = async () => {
             try {
-                const res = await API.get("/subcategories");
+                const res = await API.get("/getallsubcategories");
                 setSubCategory(res.data.data);
             } catch (err) {
-                console.error("Error fetching subcategories:", err);
+                console.error("Error fetching getallsubcategories:", err);
             }
         };
         fetchSubCategory();

@@ -13,6 +13,7 @@ import About from './component/pages/About.jsx';
 import DetailsPost from './component/pages/DetailsPost.jsx';
 import Footer from './component/pages/Footer.jsx';
 import News from './component/pages/News.jsx';
+import CategoryPage from './component/pages/CategoryPage.jsx';
 
 const App = () => {
   const location = useLocation();
@@ -32,7 +33,8 @@ const App = () => {
         <Route path="/news" element={<News />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/news/:slug" element={<DetailsPost />} />
-
+        <Route path="/category/:slug" element={<CategoryPage />} />
+        
         {/* Client */}
         <Route
           path="/dashboard/*"
