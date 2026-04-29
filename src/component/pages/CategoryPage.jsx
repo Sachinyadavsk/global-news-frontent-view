@@ -8,6 +8,7 @@ const CategoryPage = () => {
     const { slug } = useParams();
     const [posts, setPosts] = useState([]);
     const [categoriesSlug, setCategoriesSlug] = useState([]);
+    const [subcategoryList, setSubcategoryList] = useState([]);
     const [loading, setLoading] = useState(true);
     const categoryId = categoriesSlug?._id;
 
@@ -44,6 +45,24 @@ const CategoryPage = () => {
         fetchPosts();
     }, [categoryId]);
 
+    //  Fetch fetch Subcategory List
+    useEffect(() => {
+        if (!categoryId) return;
+        const fetchSubcategoryList = async () => {
+            try {
+                const res = await API.get(`/subcategories/category/${categoryId}`);
+                setSubcategoryList(res.data.data);
+                // console.log("sub category list data", res.data.data);
+                setLoading(false);
+            } catch (err) {
+                console.error("Error fetching posts:", err);
+                setLoading(false);
+            }
+        };
+
+        fetchSubcategoryList();
+    }, [categoryId]);
+
     return (
         <div className="bg-white min-h-screen">
             {/* News Collections */}
@@ -55,14 +74,34 @@ const CategoryPage = () => {
                         <li className='text-green-800'>{categoriesSlug.name}</li>
                     </ul>
                 </h2>
-                
+                <div className="max-w-2xl mx-auto">
+                    <div className="">
+                        <div className="flex gap-3">
+                            {subcategoryList.length === 0 ? (
+                                <p></p>
+                            ) : (
+                                subcategoryList.map(catelist => (
+                                    <Link to={`/category/${categoriesSlug.slug}/${catelist.slug}`}>
+                                        <div
+                                            style={{ backgroundColor: categoriesSlug.color }}
+                                            className="text-white font-semibold text-sm border rounded p-1"
+                                        >
+                                            {catelist.name}
+                                        </div>
+                                    </Link>
+                                ))
+
+                            )}
+                        </div>
+                    </div>
+                </div>
                 <div className="sm:flex flex-cols-1 md:flex-cols-2 gap-2 mt-6">
                     <div className="max-w-4xl mx-auto">
                         <div className="border rounded-lg shadow hover:shadow-lg transition duration-300 p-6">
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
                                 {posts.length === 0 ? (
                                     <p className="col-span-full text-center text-gray-500">
-                                        No categories post found
+                                        Loading categories post
                                     </p>
                                 ) : (
                                     posts.map(post => (
@@ -93,7 +132,7 @@ const CategoryPage = () => {
                             <div className="max-w-full">
                                 {posts.length === 0 ? (
                                     <p className="col-span-full text-center text-gray-500">
-                                        No categories posts found
+                                        loading categories posts
                                     </p>
                                 ) : (
                                     posts.map(post => (
@@ -123,7 +162,7 @@ const CategoryPage = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

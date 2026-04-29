@@ -24,7 +24,7 @@ const Posts = () => {
   useEffect(() => {
     const fetchSubcategories = async () => {
       try {
-        const res = await API.get("/subcategories");
+        const res = await API.get("/getallsubcategories");
         setSubCategories(res.data.data);
       } catch (err) {
         console.error("Error fetching subcategories:", err);

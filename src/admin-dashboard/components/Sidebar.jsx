@@ -27,8 +27,7 @@ const Sidebar = ({ open, setOpen }) => {
         {
             name: "Slider",
             children: [
-                { name: "Slider List", path: "/admin/slider" },
-                { name: "Add Slider", path: "/admin/slider/add" },
+                { name: "Slider List", path: "/admin/posts/slider" }
             ],
         },
         

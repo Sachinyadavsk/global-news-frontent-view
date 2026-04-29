@@ -61,7 +61,7 @@ const Navbar = () => {
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center space-x-6">
-                        {menuItems.slice(0, 7).map((item) => {
+                        {menuItems.slice(0, 6).map((item) => {
                             const subs = getSubCategories(item._id);
                             return (
                                 <div key={item._id} className="relative group">

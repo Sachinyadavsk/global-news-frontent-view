@@ -14,6 +14,7 @@ import DetailsPost from './component/pages/DetailsPost.jsx';
 import Footer from './component/pages/Footer.jsx';
 import News from './component/pages/News.jsx';
 import CategoryPage from './component/pages/CategoryPage.jsx';
+import SubCategory from "./component/pages/SubCategory.jsx"
 
 const App = () => {
   const location = useLocation();
@@ -34,7 +35,8 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/news/:slug" element={<DetailsPost />} />
         <Route path="/category/:slug" element={<CategoryPage />} />
-        
+        <Route path="/category/:categoryslug/:subcategoryslug" element={<SubCategory />} />
+
         {/* Client */}
         <Route
           path="/dashboard/*"

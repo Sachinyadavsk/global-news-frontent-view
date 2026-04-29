@@ -18,6 +18,7 @@ import SubcategoryAdd from "./pages/subcategory/SubcategoryAdd";
 import SubcategoryEdit from "./pages/subcategory/SubcategoryEdit";
 import PageAdd from "./pages/PageAdd";
 import PageEdit from "./pages/PageEdit";
+import Slider from "./pages/posts/Slider";
 
 
 
@@ -43,6 +44,8 @@ const AdminApp = () => {
         <Route path="/posts" element={<Posts />} />
         <Route path="/posts/add" element={<PostsAdd />} />
         <Route path="/posts/edit/:id" element={<PostEdit />} />
+        <Route path="/posts/slider" element={<Slider />} />
+        
         {/* category */}
         <Route path="/category/add" element={<Category />} />
         <Route path="/category/list" element={<CategoryList />} />

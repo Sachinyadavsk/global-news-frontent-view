@@ -6,6 +6,12 @@ const PostsAdd = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [videoPreview, setVideoPreview] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [filteredSubCategories, setFilteredSubCategories] = useState([]);
 
   const [form, setForm] = useState({
     uid: "1",
@@ -20,14 +26,10 @@ const PostsAdd = () => {
     is_slider: "yes",
     is_popular: "yes",
     is_deals_under: "no",
-    status:"published",
+    status: "published",
   });
 
-  const [imagePreview, setImagePreview] = useState(null);
-  const [videoPreview, setVideoPreview] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+
 
   //  Fetch categories
   useEffect(() => {
@@ -38,10 +40,22 @@ const PostsAdd = () => {
 
   //  Fetch subcategories
   useEffect(() => {
-    API.get("/subcategories")
+    API.get("/getallsubcategories")
       .then(res => setSubCategories(res.data.data))
       .catch(err => console.log(err));
   }, []);
+
+  // ✅ Filter subcategories when category changes
+  useEffect(() => {
+    if (form.category_id) {
+      const filtered = subCategories.filter(
+        (sub) => String(sub.category_id) === String(form.category_id)
+      );
+      setFilteredSubCategories(filtered);
+    } else {
+      setFilteredSubCategories([]);
+    }
+  }, [form.category_id, subCategories]);
 
   //  Slug generator
   const generateSlug = (text) =>
@@ -59,6 +73,7 @@ const PostsAdd = () => {
         title: value,
         slug: generateSlug(value),
       });
+
     } else if (type === "file") {
       const file = files[0];
 
@@ -67,16 +82,16 @@ const PostsAdd = () => {
         [name]: file,
       });
 
-      // Preview
       if (name === "image_big") {
         setImagePreview(URL.createObjectURL(file));
       }
 
     } else {
-      setForm({
-        ...form,
+      setForm((prev) => ({
+        ...prev,
         [name]: value,
-      });
+        ...(name === "category_id" && { subcategories_id: "" }) // ✅ RESET HERE
+      }));
     }
   };
 
@@ -207,19 +222,26 @@ const PostsAdd = () => {
               {/* subCategories select option list */}
 
               <label className="block text-md mb-2 font-bold">SubCate Name</label>
+
               {subCategories.length > 0 ? (
                 <select
                   name="subcategories_id"
                   value={form.subcategories_id}
                   onChange={handleChange}
                   className="border p-2 mb-3 rounded w-full"
+                  disabled={!form.category_id} // ✅ disable until category selected
                 >
                   <option value="">Select SubCategory</option>
-                  {subCategories.map((subcat) => (
-                    <option key={subcat._id} value={subcat._id}>
-                      {subcat.name}
-                    </option>
-                  ))}
+
+                  {filteredSubCategories.length > 0 ? (
+                    filteredSubCategories.map((subcat) => (
+                      <option key={subcat._id} value={subcat._id}>
+                        {subcat.name}
+                      </option>
+                    ))
+                  ) : (
+                    <option disabled>No subcategories available</option>
+                  )}
                 </select>
               ) : (
                 <p>Loading subCategories...</p>
